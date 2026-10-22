@@ -1400,6 +1400,7 @@
   <script src="pdf-quiz.js"></script>
   <script>
     const STORAGE_KEY = "THINKQUEST_2026_DATA";
+    const QUESTION_ID_MIGRATIONS = {};
 
     // Application state
     let appState = {
@@ -1424,6 +1425,27 @@
         if (stored) {
           const parsed = JSON.parse(stored);
           appState = { ...appState, ...parsed };
+          if (Object.keys(QUESTION_ID_MIGRATIONS).length > 0) {
+            const migrateQuestionId = id => QUESTION_ID_MIGRATIONS[String(id)] ?? id;
+            const migratedAnswers = {};
+
+            Object.entries(appState.answeredMap).forEach(([id, answer]) => {
+              const canonicalId = String(migrateQuestionId(id));
+              const existingAnswer = migratedAnswers[canonicalId];
+              if (!existingAnswer || (!existingAnswer.correct && answer.correct)) {
+                migratedAnswers[canonicalId] = answer;
+              }
+            });
+
+            appState.answeredMap = migratedAnswers;
+            appState.bookmarks = [...new Set(appState.bookmarks.map(migrateQuestionId))];
+            appState.knownCards = [...new Set(appState.knownCards.map(migrateQuestionId))];
+            appState.mistakesLog = appState.mistakesLog.map(mistake => ({
+              ...mistake,
+              questionId: migrateQuestionId(mistake.questionId)
+            }));
+            saveStorage();
+          }
           // Check daily reset
           if (appState.dailyGoalDate !== new Date().toDateString()) {
             appState.dailyAnswerCount = 0;
@@ -1640,9 +1662,23 @@
       ];
 
       let currentId = 141;
-      // Loop templates to expand bank to 300+ solid academic questions
+      const questionIdsByText = new Map(QUESTION_BANK.map(question => [
+        question.question.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase(),
+        question.id
+      ]));
+
+      // Add each template once, preserving the earliest ID for saved progress.
       while (currentId <= 310) {
         const template = extraQuestions[(currentId - 141) % extraQuestions.length];
+        const normalizedQuestion = template[3].normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase();
+        const existingId = questionIdsByText.get(normalizedQuestion);
+
+        if (existingId !== undefined) {
+          QUESTION_ID_MIGRATIONS[currentId] = existingId;
+          currentId++;
+          continue;
+        }
+
         QUESTION_BANK.push({
           id: currentId,
           subject: template[0],
@@ -1653,6 +1689,7 @@
           options: [...template[5]],
           explanation: template[6]
         });
+        questionIdsByText.set(normalizedQuestion, currentId);
         currentId++;
       }
     })();
