@@ -94,6 +94,20 @@
       border-bottom: 1px solid var(--border-color);
     }
 
+    .mobile-sidebar-close {
+      display: none;
+      width: 44px;
+      aspect-ratio: 1;
+      margin-left: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 1.2rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
     .brand-icon {
       font-size: 2rem;
       background: linear-gradient(135deg, var(--accent-primary), #fbbf24);
@@ -690,6 +704,12 @@
       }
       .mobile-menu-btn {
         display: block;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .mobile-sidebar-close {
+        display: grid;
+        place-items: center;
       }
       .hero-banner {
         padding: 24px 20px;
@@ -699,6 +719,182 @@
       }
       .flashcard-perspective {
         height: 280px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #main-content {
+        padding: 12px 12px 40px;
+      }
+
+      .top-header {
+        position: sticky;
+        top: 0;
+        z-index: 950;
+        gap: 8px;
+        padding: 10px 0;
+        margin-bottom: 18px;
+        background: var(--bg-primary);
+      }
+
+      .top-header > div:first-child {
+        min-width: 0;
+        gap: 8px !important;
+      }
+
+      #current-page-title {
+        font-size: 0.92rem !important;
+        overflow-wrap: anywhere;
+      }
+
+      .top-actions {
+        gap: 6px;
+      }
+
+      .btn-toggle-theme {
+        min-height: 44px;
+        padding: 7px 9px;
+        font-size: 0.78rem;
+      }
+
+      .hero-banner {
+        padding: 20px 16px;
+        margin-bottom: 18px;
+      }
+
+      .hero-banner p {
+        font-size: 0.95rem;
+      }
+
+      #page-home .hero-banner > div:last-child {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 8px !important;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        min-width: 0;
+        padding: 14px 8px;
+      }
+
+      .stat-card .value {
+        font-size: 1.45rem;
+      }
+
+      .stat-card .label {
+        font-size: 0.7rem;
+        overflow-wrap: anywhere;
+      }
+
+      #home-goal-card > div:first-child {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 6px;
+      }
+
+      #home-goal-ratio {
+        align-self: flex-end;
+        white-space: nowrap;
+        font-size: 0.95rem !important;
+      }
+
+      .subjects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .subject-btn-card {
+        min-width: 0;
+        padding: 14px 12px;
+      }
+
+      .subject-btn-card strong {
+        overflow-wrap: anywhere;
+      }
+
+      .category-pills {
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+
+      .cat-pill {
+        min-height: 44px;
+        max-width: 100%;
+        padding: 8px 12px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .filter-bar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .filter-bar .search-input,
+      .filter-bar .select-dropdown,
+      .filter-bar .btn {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+      }
+
+      .card,
+      .rev-card {
+        min-width: 0;
+        padding: 16px;
+      }
+
+      .rev-meta {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .rev-meta > span:last-child {
+        flex: 1 1 100%;
+        text-align: left !important;
+        overflow-wrap: anywhere;
+      }
+
+      .rev-question {
+        font-size: 1.08rem;
+      }
+
+      .rev-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .rev-controls .btn,
+      .btn,
+      .option-btn {
+        min-height: 44px;
+      }
+
+      .option-btn {
+        gap: 10px;
+        padding: 12px;
+        font-size: 0.95rem;
+      }
+
+      #rev-pagination {
+        flex-wrap: wrap;
+      }
+
+      #rev-pagination .btn {
+        min-width: 96px;
+      }
+
+      .flashcard-perspective {
+        height: 260px;
       }
     }
   </style>
@@ -714,6 +910,7 @@
         <h1>THINK QUEST</h1>
         <p>STI Laoag • Tagisan Ng Talino 26–27</p>
       </div>
+      <button class="mobile-sidebar-close" id="mobile-close" type="button" aria-label="Close navigation" title="Close navigation">×</button>
     </div>
     <ul class="nav-menu">
       <li class="nav-item"><button class="active" data-page="home">🏠 Dashboard</button></li>
@@ -736,7 +933,7 @@
   <main id="main-content">
     <header class="top-header">
       <div style="display:flex; align-items:center; gap:12px;">
-        <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle navigation">☰</button>
+        <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
         <span id="current-page-title" style="font-weight:800; font-size:1.1rem; color:var(--text-main);">DASHBOARD</span>
       </div>
       <div class="top-actions">
@@ -763,7 +960,7 @@
       </div>
 
       <!-- Quick Daily Goal -->
-      <div class="card" style="margin-bottom: 24px;">
+      <div class="card" id="home-goal-card" style="margin-bottom: 24px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div>
             <h3 style="font-size:1.1rem; font-weight:700;">🎯 Daily Study Goal</h3>
@@ -863,13 +1060,14 @@
       <div id="reviewer-container">
         <!-- Rendered via JS -->
       </div>
+      <div id="rev-pagination" aria-live="polite" style="display:flex; justify-content:center; align-items:center; gap:12px; margin-top:20px;"></div>
     </section>
 
     <section id="page-quiz" class="section-page">
       <!-- Quiz Setup View -->
       <div id="quiz-setup-view" class="card" style="max-width:680px; margin:0 auto;">
         <h2 style="margin-bottom:12px;">🎯 Competition Quiz Arena</h2>
-        <p style="color:var(--text-muted); margin-bottom:24px;">Configure test parameters to evaluate your readiness with randomized multiple-choice questions.</p>
+        <p style="color:var(--text-muted); margin-bottom:24px;">Choose the PDF Handouts set for mixed multiple-choice, true/false, and short-answer questions with source pages.</p>
         
         <div style="display:flex; flex-direction:column; gap:16px;">
           <div>
@@ -881,6 +1079,7 @@
               <option value="Mathematics">➗ Mathematics</option>
               <option value="Science and Technology">🔬 Science and Technology</option>
               <option value="General Information">📰 General Information</option>
+              <option value="pdf">📄 PDF Handouts (50 Questions)</option>
             </select>
           </div>
 
@@ -899,9 +1098,9 @@
             <label style="font-weight:700; font-size:0.9rem; display:block; margin-bottom:6px;">Number of Questions:</label>
             <select id="quiz-cfg-count" class="select-dropdown" style="width:100%;">
               <option value="10">10 Questions (Quick Check)</option>
-              <option value="20" selected>20 Questions (Standard Quiz)</option>
+              <option value="20">20 Questions (Standard Quiz)</option>
               <option value="30">30 Questions (Endurance)</option>
-              <option value="50">50 Questions (Full Round)</option>
+              <option value="50" selected>50 Questions (Full Round)</option>
             </select>
           </div>
 
@@ -1176,6 +1375,11 @@
       <div class="card" style="max-width:800px; margin:0 auto;">
         <h2 style="color:var(--accent-primary); margin-bottom:12px;">THINK QUEST / Tagisan Ng Talino 2026–27</h2>
         <p style="color:var(--text-muted); margin-bottom:20px;">An interactive study guide for STI Laoag students preparing for Tagisan Ng Talino, with practice questions across the competition's core subject areas.</p>
+
+        <h3 style="margin-bottom:8px; font-size:1.1rem; color:var(--accent-blue);">🏆 Champions</h3>
+        <p style="color:var(--text-muted); margin-bottom:20px;"><strong>PPG:</strong> Lyn Jay, Ameri Pascual, and Zyrah Althea Vendanilllo</p>
+
+        <p style="color:var(--text-muted); margin-bottom:20px;"><strong>Website Developer:</strong> Jaymar Budduan</p>
         
         <h3 style="margin-bottom:8px; font-size:1.1rem; color:var(--accent-blue);">📘 Core Competition Clusters</h3>
         <ul style="margin-left:20px; margin-bottom:20px; color:var(--text-muted); line-height:1.8;">
@@ -1193,6 +1397,7 @@
     </section>
   </main>
 
+  <script src="pdf-quiz.js"></script>
   <script>
     const STORAGE_KEY = "THINKQUEST_2026_DATA";
 
@@ -1443,7 +1648,7 @@
           subject: template[0],
           category: template[1],
           difficulty: template[2],
-          question: `[Q${currentId}] ${template[3]}`,
+          question: template[3],
           answer: template[4],
           options: [...template[5]],
           explanation: template[6]
@@ -1456,7 +1661,13 @@
     const pages = document.querySelectorAll(".section-page");
     const pageTitleHeader = document.getElementById("current-page-title");
     const mobileToggle = document.getElementById("mobile-toggle");
+    const mobileClose = document.getElementById("mobile-close");
     const sidebar = document.getElementById("sidebar");
+
+    function setSidebarOpen(isOpen) {
+      sidebar.classList.toggle("open", isOpen);
+      mobileToggle.setAttribute("aria-expanded", String(isOpen));
+    }
 
     function navigateTo(pageId) {
       pages.forEach(p => p.classList.remove("active"));
@@ -1469,7 +1680,7 @@
       if (targetBtn) targetBtn.classList.add("active");
 
       pageTitleHeader.innerText = pageId.toUpperCase().replace("-", " ");
-      sidebar.classList.remove("open");
+      setSidebarOpen(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Refresh view-specific renders
@@ -1488,8 +1699,10 @@
     });
 
     mobileToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
+      setSidebarOpen(!sidebar.classList.contains("open"));
     });
+
+    mobileClose.addEventListener("click", () => setSidebarOpen(false));
 
     // Theme Switcher Logic
     const themeBtn = document.getElementById("theme-toggle");
@@ -1515,7 +1728,7 @@
     });
 
     function renderHomeDashboard() {
-      const totalQ = QUESTION_BANK.length;
+      const totalQ = QUESTION_BANK.length + PDF_QUIZ_QUESTIONS.length;
       const answeredKeys = Object.keys(appState.answeredMap);
       const answeredCount = answeredKeys.length;
       let correctCount = 0;
@@ -1568,6 +1781,8 @@
       "Science and Technology",
       "General Information"
     ];
+    const reviewerSubjectList = [...subjectList, "PDF Handouts"];
+    const reviewerQuestionBank = [...QUESTION_BANK, ...PDF_QUIZ_QUESTIONS];
 
     let currentSelectedSubject = "Arts and Literature";
     let currentSelectedCategory = "All";
@@ -1585,17 +1800,18 @@
         "General Information": "📰"
       };
 
-      subjectList.forEach(sub => {
+      reviewerSubjectList.forEach(sub => {
         const card = document.createElement("div");
         card.className = `subject-btn-card ${currentSelectedSubject === sub ? 'active' : ''}`;
         card.innerHTML = `
           <div style="font-size:1.6rem;">${icons[sub] || '📚'}</div>
           <strong style="font-size:1.02rem;">${sub}</strong>
-          <span style="font-size:0.78rem; color:var(--text-muted);">${QUESTION_BANK.filter(q=>q.subject===sub).length} Questions</span>
+          <span style="font-size:0.78rem; color:var(--text-muted);">${reviewerQuestionBank.filter(q=>q.subject===sub).length} Questions</span>
         `;
         card.onclick = () => {
           currentSelectedSubject = sub;
           currentSelectedCategory = "All";
+          reviewerPageIndex = 0;
           appState.lastActiveSubject = sub;
           appState.lastActiveCategory = "All";
           saveStorage();
@@ -1608,7 +1824,7 @@
       const catBox = document.getElementById("rev-category-pills");
       catBox.innerHTML = "";
 
-      const subQuestions = QUESTION_BANK.filter(q => q.subject === currentSelectedSubject);
+      const subQuestions = reviewerQuestionBank.filter(q => q.subject === currentSelectedSubject);
       const categories = ["All", ...new Set(subQuestions.map(q => q.category))];
 
       categories.forEach(cat => {
@@ -1617,6 +1833,7 @@
         pill.innerText = cat;
         pill.onclick = () => {
           currentSelectedCategory = cat;
+          reviewerPageIndex = 0;
           appState.lastActiveCategory = cat;
           saveStorage();
           renderCategoryFilteredQuestions();
@@ -1632,7 +1849,7 @@
       const searchVal = document.getElementById("rev-search-input").value.trim().toLowerCase();
       const diffVal = document.getElementById("rev-filter-diff").value;
 
-      let filtered = QUESTION_BANK.filter(q => q.subject === currentSelectedSubject);
+      let filtered = reviewerQuestionBank.filter(q => q.subject === currentSelectedSubject);
 
       if (currentSelectedCategory !== "All") {
         filtered = filtered.filter(q => q.category === currentSelectedCategory);
@@ -1647,9 +1864,13 @@
           q.question.toLowerCase().includes(searchVal) ||
           q.answer.toLowerCase().includes(searchVal) ||
           q.explanation.toLowerCase().includes(searchVal) ||
-          q.category.toLowerCase().includes(searchVal)
+          q.category.toLowerCase().includes(searchVal) ||
+          (q.source || "").toLowerCase().includes(searchVal)
         );
       }
+
+      const pagination = document.getElementById("rev-pagination");
+      pagination.innerHTML = "";
 
       if (filtered.length === 0) {
         container.innerHTML = `
@@ -1661,11 +1882,19 @@
         return;
       }
 
-      // Display cards
+      const pageSize = 15;
+      const pageCount = Math.ceil(filtered.length / pageSize);
+      reviewerPageIndex = Math.min(reviewerPageIndex, pageCount - 1);
+      const startIndex = reviewerPageIndex * pageSize;
+
+      // Display one page of cards at a time.
       container.innerHTML = "";
-      filtered.slice(0, 15).forEach((q) => {
+      filtered.slice(startIndex, startIndex + pageSize).forEach((q) => {
         const isBookmarked = appState.bookmarks.includes(q.id);
         const isKnown = appState.knownCards.includes(q.id);
+        const sourceMeta = q.source
+          ? `${q.source} • PDF p. ${q.page}`
+          : `Item #${q.id}`;
 
         const card = document.createElement("div");
         card.className = "rev-card";
@@ -1675,7 +1904,7 @@
               <span class="badge badge-${q.difficulty.toLowerCase().replace(' ', '')}">${q.difficulty}</span>
               <span style="margin-left:8px; font-weight:600;">${q.category}</span>
             </div>
-            <span style="font-size:0.8rem;">Item #${q.id}</span>
+            <span style="font-size:0.8rem; text-align:right;">${sourceMeta}</span>
           </div>
           <div class="rev-question">${q.question}</div>
           <div class="rev-answer-box" id="ans-box-${q.id}">
@@ -1684,15 +1913,44 @@
             <p style="font-size:0.92rem; color:var(--text-muted);">${q.explanation}</p>
           </div>
           <div class="rev-controls">
-            <button class="btn btn-primary" onclick="toggleReviewAnswer(${q.id}, this)">Show Answer</button>
-            <button class="btn btn-outline" onclick="toggleBookmark(${q.id}, this)">${isBookmarked ? '★ Bookmarked' : '⭐ Bookmark'}</button>
-            <button class="btn btn-outline" onclick="toggleKnownCard(${q.id}, this)" style="${isKnown ? 'border-color:var(--success); color:var(--success);' : ''}">
+            <button class="btn btn-primary rev-answer-toggle">Show Answer</button>
+            <button class="btn btn-outline rev-bookmark-toggle">${isBookmarked ? '★ Bookmarked' : '⭐ Bookmark'}</button>
+            <button class="btn btn-outline rev-known-toggle" style="${isKnown ? 'border-color:var(--success); color:var(--success);' : ''}">
               ${isKnown ? '✓ Known' : '✓ Mark as Known'}
             </button>
           </div>
         `;
+        card.querySelector(".rev-answer-toggle").addEventListener("click", event => toggleReviewAnswer(q.id, event.currentTarget));
+        card.querySelector(".rev-bookmark-toggle").addEventListener("click", event => toggleBookmark(q.id, event.currentTarget));
+        card.querySelector(".rev-known-toggle").addEventListener("click", event => toggleKnownCard(q.id, event.currentTarget));
         container.appendChild(card);
       });
+
+      if (pageCount > 1) {
+        const previousButton = document.createElement("button");
+        previousButton.className = "btn btn-outline";
+        previousButton.innerText = "Previous";
+        previousButton.disabled = reviewerPageIndex === 0;
+        previousButton.addEventListener("click", () => {
+          reviewerPageIndex--;
+          renderCategoryFilteredQuestions();
+        });
+
+        const pageStatus = document.createElement("span");
+        pageStatus.style.color = "var(--text-muted)";
+        pageStatus.innerText = `Showing ${startIndex + 1}-${Math.min(startIndex + pageSize, filtered.length)} of ${filtered.length}`;
+
+        const nextButton = document.createElement("button");
+        nextButton.className = "btn btn-outline";
+        nextButton.innerText = "Next";
+        nextButton.disabled = reviewerPageIndex === pageCount - 1;
+        nextButton.addEventListener("click", () => {
+          reviewerPageIndex++;
+          renderCategoryFilteredQuestions();
+        });
+
+        pagination.append(previousButton, pageStatus, nextButton);
+      }
     }
 
     function toggleReviewAnswer(id, btn) {
@@ -1735,12 +1993,19 @@
       saveStorage();
     }
 
-    document.getElementById("rev-search-input").addEventListener("input", renderCategoryFilteredQuestions);
-    document.getElementById("rev-filter-diff").addEventListener("change", renderCategoryFilteredQuestions);
+    document.getElementById("rev-search-input").addEventListener("input", () => {
+      reviewerPageIndex = 0;
+      renderCategoryFilteredQuestions();
+    });
+    document.getElementById("rev-filter-diff").addEventListener("change", () => {
+      reviewerPageIndex = 0;
+      renderCategoryFilteredQuestions();
+    });
     document.getElementById("rev-clear-filter").addEventListener("click", () => {
       document.getElementById("rev-search-input").value = "";
       document.getElementById("rev-filter-diff").value = "all";
       currentSelectedCategory = "All";
+      reviewerPageIndex = 0;
       renderReviewerSection();
     });
 
@@ -1758,9 +2023,9 @@
       const difficulty = document.getElementById("quiz-cfg-difficulty").value;
       const count = parseInt(document.getElementById("quiz-cfg-count").value, 10);
 
-      let pool = [...QUESTION_BANK];
+      let pool = subject === "pdf" ? [...PDF_QUIZ_QUESTIONS] : [...QUESTION_BANK];
 
-      if (subject !== "all") {
+      if (subject !== "all" && subject !== "pdf") {
         pool = pool.filter(q => q.subject === subject);
       }
       if (difficulty !== "all") {
@@ -1806,17 +2071,48 @@
 
       document.getElementById("quiz-diff-badge").className = `badge badge-${q.difficulty.toLowerCase().replace(' ', '')}`;
       document.getElementById("quiz-diff-badge").innerText = q.difficulty;
-      document.getElementById("quiz-category-tag").innerText = `${q.subject} • ${q.category}`;
+      const typeLabels = { "multiple-choice": "Multiple Choice", "true-false": "True or False", "short-answer": "Short Answer" };
+      const categoryTag = document.getElementById("quiz-category-tag");
+      categoryTag.innerText = `${q.category} • ${typeLabels[q.type] || "Multiple Choice"} • ${q.source ? `${q.source}, p. ${q.page}` : "PDF source unavailable"}`;
+      categoryTag.title = q.source || "";
       document.getElementById("quiz-question-text").innerText = q.question;
 
       document.getElementById("quiz-explanation-box").style.display = "none";
       document.getElementById("btn-quiz-next").style.display = "none";
 
-      // Options randomization
       const optionsBox = document.getElementById("quiz-options-list");
       optionsBox.innerHTML = "";
 
-      const shuffledOptions = [...q.options];
+      if (q.type === "short-answer") {
+        const form = document.createElement("form");
+        form.style.display = "flex";
+        form.style.flexWrap = "wrap";
+        form.style.gap = "10px";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "search-input";
+        input.placeholder = "Type your answer";
+        input.autocomplete = "off";
+        input.setAttribute("aria-label", "Short answer");
+        input.style.flex = "1 1 240px";
+
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.className = "btn btn-primary";
+        submitButton.innerText = "Submit Answer";
+
+        form.append(input, submitButton);
+        form.addEventListener("submit", event => {
+          event.preventDefault();
+          handleQuizShortAnswerSubmit(input, submitButton, q);
+        });
+        optionsBox.appendChild(form);
+        input.focus();
+        return;
+      }
+
+      const shuffledOptions = [...(q.options || [])];
       for (let i = shuffledOptions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
@@ -1827,16 +2123,37 @@
         const btn = document.createElement("button");
         btn.className = "option-btn";
         btn.innerHTML = `<span class="opt-letter">${letters[idx]}</span><span>${opt}</span>`;
+        btn.dataset.correct = normalizeQuizAnswer(opt) === normalizeQuizAnswer(q.answer) ? "true" : "false";
         btn.onclick = () => handleQuizOptionSelect(btn, opt, q);
         optionsBox.appendChild(btn);
       });
     }
 
     function handleQuizOptionSelect(selectedBtn, selectedText, question) {
+      handleQuizAnswer(selectedText, question, selectedBtn);
+    }
+
+    function handleQuizShortAnswerSubmit(input, submitButton, question) {
+      const response = input.value.trim();
+      if (!response) {
+        input.focus();
+        return;
+      }
+      input.disabled = true;
+      submitButton.disabled = true;
+      handleQuizAnswer(response, question);
+    }
+
+    function normalizeQuizAnswer(value) {
+      return String(value ?? "").normalize("NFKC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
+    }
+
+    function handleQuizAnswer(selectedText, question, selectedBtn = null) {
       const allButtons = document.querySelectorAll(".option-btn");
       allButtons.forEach(b => b.disabled = true);
 
-      const isCorrect = (selectedText.trim().toLowerCase() === question.answer.trim().toLowerCase());
+      const acceptedAnswers = [question.answer, ...(question.acceptedAnswers || [])].map(normalizeQuizAnswer);
+      const isCorrect = acceptedAnswers.includes(normalizeQuizAnswer(selectedText));
       
       // Update stats
       if (!quizCategoryStats[question.category]) {
@@ -1845,16 +2162,15 @@
       quizCategoryStats[question.category].total++;
 
       if (isCorrect) {
-        selectedBtn.classList.add("correct");
+        if (selectedBtn) selectedBtn.classList.add("correct");
         quizScore++;
         appState.streak++;
         quizCategoryStats[question.category].correct++;
       } else {
-        selectedBtn.classList.add("wrong");
+        if (selectedBtn) selectedBtn.classList.add("wrong");
         appState.streak = 0;
-        // Highlight correct button
         allButtons.forEach(b => {
-          if (b.innerText.includes(question.answer)) {
+          if (b.dataset.correct === "true") {
             b.classList.add("correct");
           }
         });
@@ -2220,7 +2536,7 @@
       }
 
       appState.bookmarks.forEach(id => {
-        const q = QUESTION_BANK.find(item => item.id === id);
+        const q = reviewerQuestionBank.find(item => item.id === id);
         if (!q) return;
 
         const card = document.createElement("div");
@@ -2228,7 +2544,7 @@
         card.innerHTML = `
           <div class="rev-meta">
             <span><strong>${q.subject}</strong> • ${q.category}</span>
-            <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="removeBookmark(${q.id})">Remove ✕</button>
+            <button class="btn btn-outline bookmark-remove" style="padding:4px 10px; font-size:0.75rem;">Remove ✕</button>
           </div>
           <div class="rev-question">${q.question}</div>
           <div style="background:rgba(0,0,0,0.2); padding:14px; border-radius:var(--radius-md); border-left:4px solid var(--accent-primary);">
@@ -2236,6 +2552,7 @@
             <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">${q.explanation}</p>
           </div>
         `;
+        card.querySelector(".bookmark-remove").addEventListener("click", () => removeBookmark(q.id));
         box.appendChild(card);
       });
     }
@@ -2269,7 +2586,7 @@
       }
 
       appState.mistakesLog.forEach((m, idx) => {
-        const q = QUESTION_BANK.find(item => item.id === m.questionId);
+        const q = reviewerQuestionBank.find(item => item.id === m.questionId);
         if (!q) return;
 
         const card = document.createElement("div");
@@ -2298,7 +2615,7 @@
     }
 
     function renderProgressDashboard() {
-      const totalQ = QUESTION_BANK.length;
+      const totalQ = QUESTION_BANK.length + PDF_QUIZ_QUESTIONS.length;
       const answeredKeys = Object.keys(appState.answeredMap);
       const answeredCount = answeredKeys.length;
 
