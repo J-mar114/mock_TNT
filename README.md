@@ -43,7 +43,3 @@ The app runs in the browser and does not require a backend or send progress to a
 ```
 
 There is no package manager configuration or automated test suite in the repository. The application is implemented with HTML, CSS, and vanilla JavaScript.
-
-
-
-this is the main
